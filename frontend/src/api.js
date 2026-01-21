@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://127.0.0.1:5000/api";
+const BASE_URL = "https://job-rec-backend.onrender.com";
 
 export const getJobTypes = (jobTitle) =>
   axios.post(`${BASE_URL}/get_job_types`, { jobTitle });
