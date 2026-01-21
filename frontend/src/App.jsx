@@ -46,11 +46,11 @@ function App() {
       try {
         const res = await getJobTypes(inputValue);
         setWorkTypeOptions(res.data.jobTypes);
-        addMessage("Great! Choose your preferred work type 👇", "bot");
-        setStep(2);
       } catch (error) {
         console.error(error);
       }
+      addMessage("Great! Choose your preferred work type 👇", "bot");
+      setStep(2);
     } else if (step === 3) {
       setSalary(inputValue);
       addMessage(inputValue, "user");
@@ -70,7 +70,13 @@ function App() {
   const handleWorkTypeSelect = async (type) => {
     setSelectedWorkType(type);
     addMessage(type, "user");
-    setSalaryOptions([1000000, 1400000, 1800000]);
+    try {
+      const res = await getSalaryOptions(jobTitle, type);
+      setSalaryOptions(res.data.salaryOptions);
+    } catch (error) {
+      console.error(error);
+      setSalaryOptions([1000000, 1400000, 1800000]); // fallback
+    }
     addMessage("Now select your expected salary (₹)", "bot");
     setStep(3);
   };
